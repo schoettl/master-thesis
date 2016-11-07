@@ -1,5 +1,10 @@
-Master's thesis
-===============
+Master thesis
+=============
+
+I guess this work is technically inspired by the book The Pragmatic Programmer.
+Maybe it will help someone in the process of automating the compilation of
+their thesis.
+More details are at [my blog](http://jakob.keramik-schoettl.de/blog/).
 
 Compile
 -------
@@ -45,4 +50,3 @@ R dependencies, install in R with `install.packages("packagename")`
 - ggplot2
 - dplyr
 - tikzDevice
-# master-thesis

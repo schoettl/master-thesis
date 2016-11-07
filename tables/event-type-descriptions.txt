@@ -1,0 +1,12 @@
+INITIALIZATION_END	The initial conditions in the train and in the compartment are captured and the real-time data collection starts.
+SIT_DOWN	A person sits down on a seat.
+LEAVE	A person leaves its seat and the compartment. See also \verb|CHANGE_SEAT|.
+CHANGE_SEAT	A person changes its seat. It is important to differentiate from \verb|SIT_DOWN| because that implies a new person sitting down.
+PLACE_BAGGAGE	A person places its baggage on another seat. See section Seats in~\ref{subsec:data-collection-parameters} for a precise definition.
+REMOVE_BAGGAGE	A person removes its baggage from another seat.
+DISTURBING	A person or seat is marked as disturbing. See section~\ref{subsec:interference} for a precise definition.
+STOPS_DISTURBING	A person or seat stops with disturbing. See section~\ref{subsec:interference} for a precise definition.
+DOOR_RELEASE	The doors are released and can be opened.
+TRAIN_STARTS	The train starts moving.
+COUNT_STANDING_PERSONS	Currently standing persons are counted for statistics. All persons standing in both adjacent entrance areas and in the compartment inbetween are counted.
+DIRECTION_CHANGE	The train's driving direction changes.

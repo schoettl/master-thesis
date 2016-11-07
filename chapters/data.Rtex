@@ -1,0 +1,1058 @@
+\chapter{Data collection}
+\label{ch:data}
+
+\section{Requirements}
+\label{sec:data-requirements}
+
+In this work, I realize a real-time data collection in the form of an
+observational study.
+For this, investigators observe train compartments and passengers during train
+rides over multiple stops.
+During data collection, the investigator logs all relevant events so that
+the situation can be reconstructed later.
+
+In the following, I collect requirements for both the data collection and the
+mobile app used for it.
+The requirements were collected through brainstorming and interviews with people
+who use the \sbahn\ train daily.
+
+Investigators using the app for data collections should read this section to
+obtain consistent understandings and interpretations of conditions in the train.
+Otherwise, collected data from different investigators may not be comparable.
+
+\subsection{Logged events}
+
+The first question is what kind of events are to be logged during the survey.
+Since the data collection is well supported by the mobile app, there are
+capacities for collecting more data then necessary for a study only on seating
+behavior.
+By capturing more data about the situation in the compartment and the state of
+the train, the data can also be useful to examine social behavior of groups or
+individuals, demographic distributions of passengers, or other statistics.
+
+The identified log event types are listed in table~\ref{tab:logevents}.
+
+\begin{table}[h]
+  \begin{tabular}{p{5cm}p{9cm}}
+    \hline
+    Event type & Description \\
+    \hline
+    \input{tables/event-type-descriptions.tex}
+    \hline
+  \end{tabular}
+  \caption[Description of log event types.]{%
+  Description of log event types \ie events that are captured during the
+  real-time data collection.
+  }\label{tab:logevents}
+\end{table}
+
+\subsection{Interference factors}
+\label{subsec:interference}
+
+This section identifies factors that might interfere with normal seating
+behavior.
+Although some of these factors could theoretically be included in a model, the
+situations are rare and out of scope for this thesis.
+The data collection app will provide functionality to log interfering events.
+This way, non-reliable data can easily be excluded from the data analysis.
+
+The interference factors are split into two groups: Some are associated with
+persons and others are not.
+First, this is a list of interference factors associated with persons:
+
+\begin{itemize}[noitemsep]
+
+    \item Some persons (\eg children) sharing seats.
+
+    \item A standing person who occupies a seat with baggage.
+
+    \item A person using the seat across for his or her legs.
+
+    \item An obviously drunken or unpleasant person.
+
+    \item An overly active young child.
+
+    \item Persons who blocks more than one seat with baggage that they cannot
+      simply take away (\eg large bags).
+
+    \item A dog blocking space between the seats.
+
+    \item An overweight person that takes clearly more than one seat.
+
+    \item A person that places a bicycle or another large baggage item in the
+      entrance area.
+      This is relevant because it is important for people to have visual contact
+      with their baggage \citep{rueger-2010}.
+
+    \item A person listening to load music or having a load phone conversation.
+
+\end{itemize}
+
+Second, this is a list of factors not bound to specific persons:
+
+\begin{itemize}[noitemsep]
+
+    \item A kindergarten group or school class.
+
+    \item Strong sun light on one window side.
+
+    \item An obviously dirty seat.
+
+    \item Clean newspapers or journals on a seat.
+
+    \item Particularly load conversation between persons.
+
+\end{itemize}
+
+It is possible that during the phase of data collection new factors arise.
+In this case, they will be included into the app and the data analysis.
+
+\subsection{Parameters}
+\label{subsec:data-collection-parameters}
+
+This section identifies parameters that have to be observed during the survey.
+
+\subsubsection{General}
+
+General parameters regarding the survey are:
+
+\begin{itemize}
+
+  \item Date and time of the survey.
+
+  \item The train station from that the survey starts.
+
+  \item The train's line and final destination.
+
+  \item The train's driving direction. This is only necessary to define the
+    orientation of the compartment plan (see figure~\ref{fig:app-screen-3}).
+
+  \item The investigator's name.
+
+  \item The investigator's exact position within the train and the compartment.
+
+  \item The train's type, \eg ET423 for Munich's current \sbahn\ trains.
+
+\end{itemize}
+
+Most of these parameters are covered by the survey meta data.
+Only the investigator's position within the compartment, the train's driving
+direction, and the exact start time are covered by the corresponding log events.
+
+\subsubsection{Persons}
+
+The following data about persons will be collected in this survey:
+
+\begin{itemize}[noitemsep,nolistsep]
+
+  \item gender,
+
+  \item age group,
+
+  \item the group the person is traveling with,
+
+  \item the seat(s) the person is sitting on,
+
+  \item the seat(s) the person is placing baggage on, and
+
+  \item comments.
+
+\end{itemize}
+
+Some of these parameters are taken from \citep{plank-2008,cis-2009}, which
+conducted similar surveys in inter-city trains:
+fellow passengers,
+carried baggage,
+seat numbers, and
+general comments.
+
+The age group of persons has to be estimated during the data collection.
+In \citep[4.1]{tuna-2008}, another similar survey, the authors also use age
+classes that basically break at multiples of ten.
+In this survey, different age groups are used:
+
+\begin{itemize}[noitemsep]
+  \item young children (0--6 years)
+  \item schoolchildren (6--12 years)
+  \item youth (13--18 years)
+  \item young adults (19--30 years)
+  \item adults (30--65 years)
+  \item older people (66 years and older)
+\end{itemize}
+
+People within these age groups might behave more consistently than people put
+into groups of fixed age intervals.
+Also, these age groups might be easier to estimate and therefore be more
+precise.
+For groups ``young children'', ``schoolchildren'', etc. we have role models in
+our mind. For example, young children usually do not travel alone and
+schoolchildren have a school bag.
+This simplifies the classification.
+
+Defining age groups and estimating age are still subjective assessments.
+Letting different investigators collect data can help to balance the
+subjective biases and obtain a good mean.
+
+\subsubsection{Seats}
+
+Parameters regarding the observation of seats are:
+
+\begin{itemize}
+
+  \item Occupancy by persons. This is covered by the person's parameters above.
+
+  \item Occupancy by baggage.
+    A seat counts as occupied by baggage if more than one third of its surface
+    is covered.
+    Magazines do not count as baggage unless it is clear that they belong to a
+    person.
+
+  \item Disturbing factors, \eg a dirty seat.
+    This is covered by section~\ref{subsec:interference}.
+
+  \item Seat properties, \eg facing direction and window vs. aisle side.
+    These properties can be derived from the seat number, the compartment plan,
+    and the train's driving direction.
+
+\end{itemize}
+
+\subsection{Non-functional requirements}
+
+In the following list, I define a set of non-functional requirements:
+
+\begin{itemize}
+
+  \item The data collection app and its source code shall be publicly available
+    to enable other researchers to conduct similar surveys.
+
+  \item The data collection app shall be adaptable to enable use in similar
+    surveys \eg surveys on other public transportation systems with different
+    seating layouts, waiting areas, or railway platforms.
+
+  \item The collected data and the code for data processing and analysis must be
+    open source to enable other researchers to reuse the collected data and the
+    data processing algorithms.
+
+\end{itemize}
+
+\section{Pilot data}
+
+<<echo=FALSE, include=FALSE>>=
+source('../../survey/pilot/analysis.R', chdir = TRUE)
+read_chunk('../../survey/pilot/chunks.R')
+@
+
+I first conducted a pilot study, to get an idea of how much data on seating
+behavior can realistically be gathered and to what extent a compartment can be
+reliably observed.
+
+The data was collected in \Sexpr{nrow(data)} observations at the \sbahn\ line S3
+between 2016-03-25 and 2016-04-07 on work days only.
+Two seat groups (8 seats in total) were observed.
+The following counts were recorded:
+
+\begin{itemize}[noitemsep,nolistsep]
+
+  \item the initial number of persons (\code{initial}),
+
+  \item the number of new persons sitting down (\code{sitDown}),
+
+  \item number of persons leaving (\code{leave}), and
+
+  \item the number of persons changing place within the observed seats
+    (\code{switchPlace}).
+
+\end{itemize}
+
+The person collecting the data was always sitting on one of the observed seats
+and was counted as well.
+The counting started as soon as every person, who entered at the start station,
+has sat down.
+
+This is how the data looks after preprocessing:
+
+<<pilot-head, echo=FALSE>>=
+@
+
+The above table is only a part of the dataset and some columns are renamed or
+left out for brevity.
+The \code{time} column holds the time at the start station.
+The \code{distance} (\code{dist}) column holds the distance between \code{start} and
+\code{destination} (\code{dest}) station.
+The distance values come from a distance matrix.
+As in graph theory, the distance is the number of ``edges'' between two
+stations, not the number of stations inbetween.
+
+The \code{sitDown} count is a measure for how busy it is during the observation.
+It also gives an estimate how much useful data I can gather in the later survey
+because insights on seating behavior can be obtained from these events.
+
+<<pilot-mean-sitdown>>=
+@
+
+The mean number of persons sitting down at the observed seats per stop is
+\Sexpr{sitDownPerStop}.
+Although this heavily depends on the time and the track section, it can be
+estimated that around \Sexpr{round(numberOfStopsHokiHbf * sitDownPerStop * 2)}
+sit-down events can be observed at \Sexpr{2*8} seats between Holzkirchen
+and Hauptbahnhof (Munich's central station).
+This number can be increased significantly when concentrating the observations
+on the \sbahn\ home line between Ostbahnhof and Hauptbahnhof.
+
+Figure~\ref{fig:pilot-sitdown-plot} shows collected data points.
+They can help to identify busy times for conducting later data collections.
+
+<<pilot-sitdown-plot, echo=FALSE, out.width='70%', fig.align='center', fig.cap='Mean number of sit-down per stop. On the x-axis, only the daytime is valid. The date part is have to be ignored.'>>=
+@
+
+\FloatBarrier
+
+\section{Mobile app for data collection}
+\label{sec:mobile-app}
+\FloatBarrier
+
+\subsection{User interface and usage}
+
+This section is a short description of the app's \acs{UI} and how it is used.
+
+\begin{figure}[htb]
+  \centering
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{screenshot-app-1}
+    \caption{Start screen}
+    \label{fig:app-screen-1}
+  \end{subfigure}
+  \hspace{0.6cm}
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{screenshot-app-2}
+    \caption{Survey meta data}
+    \label{fig:app-screen-2}
+  \end{subfigure}
+  \\
+  \vspace{0.6cm}
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{screenshot-app-3}
+    \caption{Initialization phase}
+    \label{fig:app-screen-3}
+  \end{subfigure}
+  \hspace{0.6cm}
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{screenshot-app-4}
+    \caption{Real-time data collection}
+    \label{fig:app-screen-4}
+  \end{subfigure}
+\caption[Screens of the data collection app.]{
+The four screens of the data collection app on a Nexus 6 smartphone.
+The blue areas in figure~\ref{fig:app-screen-3} and~\ref{fig:app-screen-4} represent a
+compartment with 16 seats (4 seat groups).
+The white area inbetween the seat groups represents the aisle.
+The small arrow in the middle indicates the driving direction.
+}\label{fig:app-screens}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{subfigure}[t]{0.27\linewidth}
+    \includegraphics[width=\linewidth]{screenshot-app-menu-empty}
+    \caption{Context menu for an empty seat}
+    \label{fig:app-menu-empty}
+  \end{subfigure}
+  \hspace{0.6cm}
+  \begin{subfigure}[t]{0.27\linewidth}
+    \includegraphics[width=\linewidth]{screenshot-app-menu-person}
+    \caption{Context menu for a seat occupied by a person}
+    \label{fig:app-menu-person}
+  \end{subfigure}
+  \hspace{0.6cm}
+  \begin{subfigure}[t]{0.27\linewidth}
+    \includegraphics[width=\linewidth]{screenshot-app-menu-baggage}
+    \caption{Context menu for a seat occupied by baggage}
+    \label{fig:app-menu-baggage}
+  \end{subfigure}
+  \caption[Context menus of seats at different states.]{%
+  Context menus for three states of a seat: empty, occupied by a person,
+  and occupied by baggage.
+  In figure~\ref{fig:app-menu-person}, the menu item \emph{Remove from group} is
+  only displayed if the person is member of a group and the menu items
+  \emph{Disturbing} and \emph{Stops disturbing} are displayed depending on the
+  current state.
+  }\label{fig:app-context-menus}
+\end{figure}
+
+The following shows the workflow for conducting a data collection.
+The paragraphs refer to respective screenshots in figure~\ref{fig:app-screens}.
+
+\begin{enumerate}
+
+  \item On the start screen of the app, there is a list of previous surveys.
+    These previous surveys can be deleted or used as a template for new surveys
+    to save typing (see figure~\ref{fig:app-screen-2}).
+    A click on the button \emph{Start new survey} brings the user to the next screen.
+
+  \item The user must input some general information about the survey.
+    This includes the train's line and destination, the start station, and the
+    user's position in the train.
+    Once finished, the user can proceed to the next screen.
+
+
+  \item This is the initialization phase of the data collection.
+    The user enters the initial occupation, groups of persons, and the driving
+    direction.
+    In addition the user should input the own seating position.
+    To proceed with the real-time data collection, the user can press the button
+    \emph{Start data collection}.
+
+  \item The screen for the data collection allows for logging relevant events in
+    real-time.
+    These events include: person sits down, person places or removes baggage on
+    another seat, person changes place, and person leaves.
+
+\end{enumerate}
+
+All this gathered data is saved in a database and can be exported to \acs{CSV}
+files for further analysis.
+
+\FloatBarrier
+
+\subsection{Usability evaluation}
+
+To get a feeling on how average smartphone users cope with the app's \acs{UI}, I
+conducted a guided usability study.
+Three subjects participated in the study, one man and two women.
+They are all in their mid-twenties, and they are using their smartphones for
+more than 3 or 5 years, respectively.
+
+The study involves an introduction and a realistic scenario, wherein the
+subjects have to accomplish a list of tasks.
+After the trial, a questionnaire with eight questions was given to the subjects.
+The subjects were observed while performing the tasks.
+The conductor took notes on any problems and helped the subjects if they were
+stuck.
+
+Only the most important and most critical features of the app were tested in
+this study.
+The study brought some usability problems to light and yielded valuable
+suggestions for improvements.
+The complete study and a list of enhancements based on the results is printed in
+the appendix~\ref{app:usability-study}.
+
+\section{Data collection}
+\label{sec:data-collection}
+
+<<echo=FALSE, include=FALSE>>=
+source('../../../seating-data/scripts/analysis.R', chdir = TRUE)
+read_chunk('../../../seating-data/scripts/chunks-collected-data.R')
+read_chunk('../../../seating-data/scripts/chunks-analysis.R')
+@
+
+% The following chunks load and preprocess the data for tables.
+% I hate to do it twice, here and in section "Data preprocessing", but I
+% currently don't know a work-around.
+
+<<seating-load-data, include=FALSE>>=
+@
+
+<<seating-keep-raw-data, include=FALSE>>=
+@
+
+<<seating-preprocessing, include=FALSE>>=
+@
+
+To obtain real data about the way people choose their seats, a data collection
+in Munich's public transport was conducted using the app developed in
+section~\ref{sec:mobile-app}.
+Only \sbahn\ trains of type \sbahntype\ were considered and mainly the line S3.
+Table~\ref{tab:surveys} lists all surveys.
+
+<<seating-survey-table, echo=FALSE, results='asis'>>=
+@
+
+
+\section{Data processing}
+\label{sec:data-processing}
+
+For data analysis, I use R, a language for statical computing.
+I use the R unit test frameworks
+\href{https://cran.r-project.org/web/packages/RUnit/index.html}{RUnit} and
+especially
+\href{https://github.com/hadley/testthat}{testthat} \citep{wickham-2011} to test
+the R code for data processing and analysis.
+The testing code amounts to about 600 lines of test cases split into 8 source
+files.\footnote{%
+\verb~wc -l seating-data/scripts/tests/*.R | awk '{print ++n, $0}'~\shellcmdline}
+
+Both, data and code are open-source and hosted at GitHub:
+\url{https://github.com/schoettl/seating-data}.
+The data is licensed under the \acf{PDDL} while the code is licensed under the
+MIT~License.
+
+\subsection{Data format}
+\label{subsec:data-format}
+
+The data, which was collected using the mobile app, can be exported to \acs{CSV}
+files.
+The exported \acs{CSV} files reflect the database schema, which is illustrated
+in figure~\ref{fig:db-schema}.
+In the following, the structure and fields of each \acs{CSV} file are described.
+There are some special features in the data format which are listed here.
+
+\begin{itemize}[noitemsep]
+
+  \item During file export, enum values are converted to strings using their
+    \code{to\-String()} method.
+
+  \item The \acs{ORM} library used in the mobile app stores the number 0 instead
+    of \code{NULL} into empty foreign key fields.
+    Thus, the number 0 in the \acs{CSV} file stands for ``no association''.
+    During data preprocessing, the 0 is rewritten to \NA\ (R's representation
+    for \acs{N/A}).
+
+  \item The \acs{ID}s of log event entries in the \acs{CSV} files might not always
+    be unique or continuous because sometimes, manual fixes have to be made
+    in this file, \eg adding forgotten events or removing invalid events.
+    This has no negative impacts on data processing.
+
+\end{itemize}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=14cm]{db-schema}
+\caption[\acs{ER} diagram of the database schema.]%
+{\acs{ER} diagram of the database schema. The exported \acs{CSV} files have
+exactly the same schema.}
+\label{fig:db-schema}
+\end{figure}
+
+\subsubsection{Survey table}
+
+This table contains metadata about each survey.
+
+\FloatBarrier
+<<echo=FALSE, results='asis'>>=
+descriptions = list(
+ID           = "The \\acs{ID} column.",
+AGENT        = "The investigator's \\acs{ID} from the person
+                table.",
+AGENT_NAME   = "Name of the investigator (because there is no name field in the
+                person table).",
+DATE         = "Date of the survey in the \\acs{ISO}~8601 format
+                (\\code{YYYY-MM-DD}).",
+DESTINATION  = "The train's final destination.",
+DOOR_NO      = "To describe the position of the observed seats within a train
+                wagon: doors are counted from the train's front.
+                Two opposing doors are not counted twice.
+                For example, the number~1 denotes the compartment between door
+                (or entrance area) 1 and 2.
+                Note: This is deprecated; \\verb|COMPARTMENT_NO| will replace
+                this column.",
+# TODO change column to COMPARTMENT_NO
+LINE         = "The train line, \\eg ``S3'' (in Munich).",
+STARTING_AT  = "The station where the investigator enters and starts the survey.",
+TRAIN_NUMBER = "The train's \\acs{ID} number.",
+TRAIN_TYPE   = "The train type, \\eg \\sbahntype\\ (Munich's \\sbahn).",
+WAGON_NO     = "To describe the position of the observed seats: The wagon
+                number, counted from the front."
+)
+makeDataColumnDescriptionTable(surveyRawData, descriptions, 'survey', 'tab:survey-data-columns')
+@
+\FloatBarrier
+
+\subsubsection{Person table}
+
+This table contains anonymous data about the observed persons.
+
+\FloatBarrier
+<<echo=FALSE, results='asis'>>=
+descriptions = list(
+ID        = "The \\acs{ID} column.",
+AGE_GROUP = "The person's age group.
+             This is a string field.
+             Possible values are defined in the enum \\code{AgeGroup}, see
+             figure~\\ref{fig:uml-class-diagram-model}.",
+GENDER    = "The person's gender.
+             This is a string field.
+             Possible values are defined in the enum \\code{Gender}, see
+             figure~\\ref{fig:uml-class-diagram-model}.",
+M_GROUP   = "The \\acs{ID} of the group this person is member of.
+             Persons are member of the same group, if they are family, friends,
+             colleagues, etc."
+)
+makeDataColumnDescriptionTable(personRawData, descriptions, 'person', 'tab:person-data-columns')
+@
+\FloatBarrier
+
+\subsubsection{Log-event table}
+
+This table contains all logged events.
+From this data, the situation at any point in time can be restored.
+
+\FloatBarrier
+<<echo=FALSE, results='asis'>>=
+descriptions = list(
+ID           = "The \\acs{ID} column.",
+EVENT_TYPE   = "The type of the logged event.
+                This is a string field.
+                Possible values are defined in the enum \\code{LogEventType}.
+                See section~\\ref{sec:data-requirements} for a full list of
+                possible events.
+                See also figure~\\ref{fig:uml-class-diagram-model} for how it is
+                used in the entity model.",
+EXTRA_INT    = "This is an extra integer field.
+                Depending on the event type it might store extra information
+                \\eg the number of standing persons.",
+EXTRA_STRING = "This is an extra string field.
+                Depending on the event type it might store extra information
+                \\eg the new driving direction.
+                During preprocessing, the empty string is rewritten to
+                \\NA.",
+PERSON       = "The \\acs{ID} of the corresponding person.
+                For some event types, this field is empty.",
+SEAT         = "The number of the corresponding seat.
+                For some event types, this field is empty.",
+SURVEY       = "The \\acs{ID} of the associated survey.",
+TIME         = "The event's time in this format: \\code{hh:mm:ss}."
+)
+makeDataColumnDescriptionTable(logEventRawData, descriptions, 'log-event', 'tab:logevent-data-columns')
+@
+\FloatBarrier
+
+\subsection{Data preprocessing}
+
+First, the three data tables introduced above (see
+section~\ref{subsec:data-format}) are loaded into memory:
+
+% It's already evaluated above!
+<<seating-load-data, eval=FALSE>>=
+@
+
+Then, some consistency checks are performed using the R unit test framework
+testthat (see section~\ref{sec:data-processing}):
+
+% It's already evaluated above!
+<<seating-check-data, eval=FALSE>>=
+@
+
+Before the data is used for further analysis, the following preprocessing steps
+are applied:
+
+\begin{enumerate}
+
+  \item \label{itm:remove-duplicate-init-end}
+    Remove duplicate \verb|INITIALIZATION_END| events.
+    For each survey, these events marking the end of the initialization phase
+    and the start of the real-time data collection.
+    Sometimes, there are more than one of these events per survey.
+    For example, investigators might press the \emph{Start survey} button
+    accidentally, before they have captured the initial situation completely,
+    and then they go back to correct the mistake.
+
+  \item Convert missing values to \NA.
+    Some unknown values in the \acs{CSV} are encoded as 0 or the empty string.
+    Amongst others, missing foreign key values, which should actually be database
+    \code{NULL}, are encoded as 0.
+    This is due to a limitation of the used \acs{ORM} library (see
+    section~\ref{subsubsec:model-and-db-schema}).
+    In R the standard representation for missing values is \NA{}.
+
+  \item Change data types from \code{factor}\footnote{In R, a \code{factor} is
+    the data type equivalent of an enum in other languages.}
+    to \code{character}
+    for some fields.
+    By default, R reads strings as \code{factor} variables from \acs{CSV}.
+    This is desired for many fields, \eg the train line and the final
+    destination.
+    However, it is not desired for times, dates, and text.
+
+  \item Add a column for the start time to the survey data.
+    The start time of a survey is the time of its corresponding
+    \verb|INITIALIZATION_END| event.
+
+  \item Sort the log events in their natural order.
+    For further processing, the log events must be sorted first by \acs{ID},
+    then by time (within groups of a survey).
+    The \acsp{ID} are (weak) monotonic increasing over all events.
+    Therefore sorting first by \acs{ID} is a save and fast approach.
+    Note that in the original \acs{CSV} file the events are sorted, but during
+    preprocessing the order can change.\footnote{For example, the join
+      operation in procedure \ref{itm:remove-duplicate-init-end} (Remove
+      duplicate \code{INIT}\ldots) changes the order.}
+
+\end{enumerate}
+
+%This is the R script for data preprocessing:
+
+% It's already evaluated above!
+%<<seating-preprocessing, eval=FALSE>>=
+%@
+
+\subsection{Data processing}
+
+Now there are three clean datasets for analysis: \code{surveyData},
+\code{personData}, and \code{logEventData}.
+Together, they contain a huge amount of information and allow to reconstruct the
+train ride in detail.
+For this work, I focus on seating data, that is data on people's seating
+behavior in trains.
+To obtain the seating data, the original datasets must be transformed, which is
+described in the following subsections.
+
+\subsubsection{Background}
+
+The original datasets are not yet usable for deeper analysis of seating
+behavior.
+Although the log events contain a lot of sit-down events, there is only little
+information to be extracted.
+Each sit-down event, combined with the corresponding person, has about a dozen
+of features (see section~\ref{subsec:data-format}):
+It captures a specific person that sits down on a specific seat at a specific
+time.
+
+This cannot answer questions like ``Do persons prefer to sit down with others of
+around the same age?''.
+It cannot even answer simpler questions like ``Do persons prefer window
+seats?'', because it is unknown if window seats are available at the moment.
+
+These questions show, that there is information missing: Information on the
+situation in the compartment before and after the person sits down.
+In the following, the situation (seat occupation and other conditions) is
+called \emph{state}.
+
+The data collection app could be programmed to compute the state immediately
+during the survey, but this has some disadvantages:
+
+\begin{itemize}[noitemsep]
+
+  \item Storing the state from before and after each event bloats the mobile device's
+    database with redundant data.
+
+  \item Computing the state during the data collection is hardcoding part of
+    the data analysis in the app.
+    However, the pure log events are independent of any analysis (seating
+    behavior, social behavior, etc.).
+
+  \item After a few surveys one might need additional state features for data
+    analysis.
+    Computing the state during the data collection makes it hard to
+    reconstruct additional features for earlier datasets, which were generated
+    with an older version of the app.
+
+\end{itemize}
+
+A better way to obtain the state is, to play back all events from the beginning
+and capture relevant state conditions for each sit-down event.
+This is done with the following command:
+
+<<seating-generate-seating-data, comment=FALSE>>=
+@
+
+\subsubsection{Generating more data}
+
+The function \code{generateMoreData} generates extra data for events by playing
+back all events (separately for each survey).
+During the playback, a state object is maintained.
+Listing~\ref{lst:generate-data} shows this algorithm for one survey.
+
+\lstinputlisting[%
+language={R},%
+caption={[Algorithm for generating extra data from events.]%
+  The algorithm for generating extra data for events of a given survey.},%
+label={lst:generate-data}]%
+{listings/generate-data.R}
+
+The function \code{collectData} in listing~\ref{lst:generate-data} is
+particularly important: It generates the records of the seating data table.
+It takes four parameters:
+
+\begin{enumerate}[noitemsep,nolistsep]
+
+  \item The data frame to which new records are added.
+
+  \item The state before the event was applied.
+
+  \item The state after the event was applied.
+
+  \item The event, that is, one row of the log event data table.
+
+\end{enumerate}
+
+The function returns an updated version of the data frame that was passed as
+first parameter.
+
+\subsubsection{Feature computation}
+
+The function \code{collectData} needs to store some data across several calls as
+an internal state.
+For example, it needs to keep track of whether the \verb|INITIALIZATION_END|
+event (table~\ref{tab:logevent-data-columns}) has already occurred.
+In other object-orientated languages I would implement a
+\code{DataCollector} class with a \code{collect} method and member
+variables for the internal state.
+In R, \acf{OOP} is supported in three different ways: the S3, S4, and R5
+approach \citep{OOinR30:online}.
+Either way, the definition of classes in R is not very convenient or readable
+compared to other languages.\footnote{I use simple S3 classes and methods to
+  handle different event types in the function \code{updateState}
+  (listing~\ref{lst:generate-data}).}
+Therefore, I use a simple closure for the \code{collectData} function.
+A closure is, when a function returns a second function and the second
+function---when called---has access to the environment of the first function
+(that is, local variables defined there).
+
+The implementation is printed in listing~\ref{lst:data-collector}.
+The outer function defines local variables, which are used as internal state for
+the inner function.
+The inner function is then returned as the result value of the outer function.
+The client can use the \code{collectData} function like this:
+
+<<eval=FALSE>>=
+collectData = createCollectDataFunction(logEventData)
+data = collectData(data, stateBefore, stateAfter, event)
+@
+
+\lstinputlisting[%
+language={R},%
+caption={[Function to reconstruct data.]%
+  Collector function to collect and compute data for further analysis.},%
+label={lst:data-collector}]%
+{listings/data-collector.R}
+
+This function is designed to be easily extensible.
+To add a new feature to the resulting data, only an additional key-value pair
+has to be added to the \code{newRow} list.
+The value can be computed in a separate function.
+Input for the computation can be any of the function's parameters or variables
+from the internal state.
+
+\subsubsection{Seating data}
+
+The seating dataset now contains detailed and easy to analyze data on people's
+seating behavior.
+Each row of the seating dataset corresponds to a sit-down event in the log
+event data.
+% The log event data is not relevant anymore for further analysis.
+Table~\ref{tab:seating-data-columns} describes the available columns of the
+seating dataset.
+Some columns refer to a number of a seat group.
+Seat groups are numbered within one compartment from left to right and from the
+front to the rear.
+
+<<seating-group-related-data, echo=FALSE>>=
+@
+
+There are \Sexpr{nrow(seatingData)} data points (rows) in the seating dataset.
+\Sexpr{nrow(surveyData)} surveys have been conducted and the behavior of about
+\Sexpr{nrow(seatingData)} individuals was observed.\footnote{It cannot be
+  guaranteed that one person is not observed multiple times across different
+  surveys. However, because of different times, places and positions within the
+  train, this is not very likely and should not be a problem.}
+
+There are \Sexpr{nrow(groupRelatedSeatingData)} data points associated with
+\Sexpr{length(unique(groupRelatedSeatingData$M_GROUP))} distinct groups of
+persons.
+Although this is not enough data to develop solid social models, it might be
+interesting for future research when more data is collected.
+
+<<echo=FALSE, results='asis'>>=
+descriptions = list(
+survey              = "The \\acs{ID} of the associated survey.",
+person              = "The new person's \\acs{ID} from the person table.",
+seat                = "The seat's number
+                       where the new person sits down.",
+group               = "The person's group \\acs{ID}.
+                       \\code{NA}, if the person is not member of a group.
+                       See table~\ref{tab:person-data-columns} for details.",
+nPersonsCompartment = "Number of other persons sitting in the compartment.",
+nPersonsSeatGroup   = "Number of other persons sitting in the seat group
+                       where the new person sits down.",
+nPersonsSeatGroup1  = "Number of other persons sitting in
+                       seat group 1.",
+nPersonsSeatGroup2  = "Number of other persons sitting in
+                       seat group 2.",
+nPersonsSeatGroup3  = "Number of other persons sitting in
+                       seat group 3.",
+nPersonsSeatGroup4  = "Number of other persons sitting in
+                       seat group 4.",
+personNext          = "The \\acs{ID} of the person sitting
+                       directly next to
+                       the new person.
+                       \\code{NA}, if there is no person on that seat.",
+personAcross        = "The \\acs{ID} of the person sitting
+                       directly across from
+                       the new person.
+                       \\code{NA}, if there is no person on that seat.",
+personDiagonal      = "The \\acs{ID} of the person sitting
+                       diagonally opposite
+                       to the new person.
+                       \\code{NA}, if there is no person on that seat.",
+seatGroup           = "Number of the seat group
+                       where the new person sits down.",
+seatSide            = "The chosen seat's position---window or aisle side.\\
+                       Possible values: \\code{WINDOW}, \\code{AISLE}.",
+seatDirection       = "The chosen seat's facing direction.\\
+                       Possible values: \\code{FORWARD}, \\code{BACKWARD}.",
+direction           = "The train's current driving direction.
+                       Possible values: \\code{FORWARD}, \\code{BACKWARD}."
+)
+makeSeatingDataColumnDescriptionTable(seatingData, descriptions, 'Columns of the seating dataset.', 'tab:seating-data-columns')
+@
+
+\FloatBarrier
+\section{Passenger counts}
+\label{sec:passenger-counts}
+
+The \acf{MVV}, the company, which organizes and coordinates Munich's public
+transport system, regulary conducts passenger surveys.
+As part of these surveys, the number of entering and leaving passengers is
+counted at every stop on a given train line by an investigator who sits on the
+train.
+
+The \acs{MVV} made data on passenger counts available for this work.
+This data is used in chapter~\ref{ch:evaluation} to provide realistic passenger
+numbers for simulation when verifying and validating the model.
+
+\section{Spawn distribution for sources}
+\label{sec:spawn-distributions}
+
+This thesis focuses on how and where people sit down in a train.
+However, people must first be spawned before they can enter the train and
+choose a seat.
+Spawning is the creation of persons during the simulation and it happens at
+special spots in the scenario, called sources.
+
+People enter the train at train stops through the doors.
+I assume that there is a distribution that describes the time deltas between
+two subsequent persons entering the train.
+This time delta is known as the intermediate arrival time.
+In the following, the distribution for the intermediate arrival time is called
+spawn distribution.
+
+\subsection{Data collection}
+
+<<cached=FALSE, echo=FALSE, include=FALSE>>=
+source('../../survey/rate/analysis.R', chdir = TRUE)
+read_chunk('../../survey/rate/chunks.R')
+@
+
+To find a suitable spawn distribution and its parameters, I conducted a data
+collection in Munich's \sbahn:
+
+\begin{itemize}
+
+  \item The investigator conducting the study sits on a place from where the
+    entrance area is well observable.
+
+  \item The investigator has a laptop running a program that allows logging
+    events with timestamps.
+
+  \item At each stop, the time of the following events are logged:
+
+    \begin{enumerate}[noitemsep]
+      \item The door starts to open.
+      \item A person enters the train.
+      \item The door shuts.
+    \end{enumerate}
+
+\end{itemize}
+
+Persons exiting the train are not counted.
+
+The program used to create the event log only writes timestamps into a text
+file.
+The event types have to be inferred later.
+
+The data collection took place on multiple days between April 12 and May 31,
+2016\footnote{\verb~grep '^#' survey/rate/rates.txt~\shellcmdline}.
+Data has been recorded at a total of \Sexpr{numberOfDoorOpen}
+stops\footnote{Actually, this is not the number of stops but the number of
+times the door was open.}.
+
+\subsection{Fitting a distribution}
+
+\subsubsection{Preprocessing}
+
+As mentioned above, the raw data is a list of timestamps.
+
+<<rates-head-raw>>=
+@
+
+The raw data must be prepared for further analysis:
+
+\begin{enumerate}
+
+  \item For each timestamp, the time differences to the previous timestamp is
+    calculated in fractional seconds.
+
+  \item Each row is then labeled with a stop \acs{ID} and one of the following
+    event types:
+    <<echo=FALSE>>=
+    levels(data$eventType)
+    @
+
+\end{enumerate}
+
+To discriminate between stops, a threshold of \Sexpr{maxSecondsDoorOpen} seconds
+is applied.
+Consecutive events with time differences below this threshold are labeled with
+the same stop \acs{ID}.
+The threshold is derived from a histogram plot of time differences in
+figure~\ref{fig:rates-time-diffs-hist}.
+
+<<rates-time-diffs-hist, echo=FALSE, message=FALSE, out.width='70%', fig.align='center', fig.cap='Histogram of the time differences between logged events.'>>=
+@
+
+The threshold could indeed also be around 25 seconds.
+I examined this situation in the pre-processed data and found that the numbers
+of door open and door close events do not match.
+Furthermore, \Sexpr{maxSecondsDoorOpen} seconds seems to be more realistic than only 25
+seconds.
+
+After data preprocessing, the dataset looks like this:
+
+<<rates-head-events>>=
+@
+
+\subsubsection{Results}
+
+Only time differences between ``passenger enters'' events can be used to examine
+the intermediate arrival time.
+Because the time differences are stored as time to the \emph{previous} event, only
+those events are of interest, where a second, third, fourth, and so forth person
+enters the train:
+
+<<rates-relevant-events>>=
+@
+
+<<rates-result-hist, echo=FALSE, message=FALSE, out.width='70%', fig.align='center', fig.cap='Histogram of the time differences between passengers entering the train.'>>=
+@
+
+The frequency distribution showed in figure~\ref{fig:rates-result-hist} can be
+approximated with an exponential distribution:
+
+\[
+f_λ(x)={\begin{cases}\displaystyle λ {{\rm {e}}}^{{-λ x}}&x\geq 0\\0&x<0\end{cases}}
+\]
+
+with $λ = \Sexpr{meanOfTimeDiffs} \si{\second}$, which is the mean of the time
+differences \ie the \code{secondsToPrevEvent} column.
+
+In section~\ref{sec:source-controller} I describe how spawn distributions are
+implemented in \vadere.
+
+\FloatBarrier
+
+\section{Summary}
+
+I gathered requirements for a data collection app and presented the resulting
+Android mobile app.
+I illustrated the \acs{UI} and the workflow, and I conducted a usability study
+to improve the user experience.
+
+I described the outline and format of the collected data and the procedure of
+data (pre)processing.
+In the procedure of data processing, the data is transformed from a general form
+to a form that can specifically be used to analyze seating behavior.
+
+In another data collection, I explored the intermediate enter times of
+train passengers as a basis for realistic simulations.
+I fitted a distribution which can be used to parameterize so-called sources
+where simulated new passengers are created.

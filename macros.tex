@@ -1,0 +1,47 @@
+
+% My macros
+
+\newcommand{\vadere}{VADERE}
+\newcommand{\vaderegui}{Vadere~GUI}
+\newcommand{\traingen}{Traingen}
+\newcommand{\seatingmodel}{seating model}
+\newcommand{\sbahn}{S-Bahn}
+\newcommand{\sbahntype}{ET423}
+\newcommand{\osm}{\acl{OSM}}
+
+\newcommand{\eg}{e.g.\ }%{e.\,g.\ }
+\newcommand{\ie}{i.e.\ }%{i.\,e.\ }
+\newcommand{\am}{\,a.m.} % for time 08:30\am
+
+\newcommand\zb{z.\,B.\ }
+
+\newcommand{\shellcmdline}{\ (shell command line)}
+\newcommand{\code}[1]{\texttt{#1}} % I do not use \verb here because then, the sep character is not obvious to the user
+%\newcommand{\hrefcode}[2]{\href{#1}{\code{#2}} % Error :(
+\newcommand{\citefig}[4]{Source: \url{#1}, %
+  filename: ``#2'', license: #3, accessed: #4}
+
+\newcommand\citeoral[3]{\footnote{#1. #2. #3.}} % name. place. date.
+\newcommand\citemvv{\citeoral{Meeting with representatives from the \acs{MVV}}%
+{MVV Geschäftsstelle}{München, 2016-05-11}}
+
+\newcommand{\exactbinomtestinparens}[2]{(exact binomial test, $p$-value #1, $n$ #2)}
+
+\newcommand{\diffStatSignificant}[2]{%
+The differences in figure~\ref{#1} are statistically %
+significant (#2).%
+}
+
+\newcommand{\diffNotSignificantButTendency}[2]{%
+The differences in figure~\ref{#1} are not statistically significant %
+although there might be a tendency (#2).%
+}
+
+\newcommand{\diffNotSignificant}[2]{%
+The differences in figure~\ref{#1} are not statistically significant (#2).%
+}
+
+\newcommand\NA{\code{NA}} % R's N/A
+
+%\newenvironment{enumeratesmall}{\begin{enumerate}}{\end{enumerate} % cannot be used: error
+

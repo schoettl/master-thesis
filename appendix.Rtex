@@ -1,0 +1,115 @@
+\begin{appendices}
+
+\chapter{Usability study for the mobile app}
+
+The following list describes improvements that have been introduced after
+evaluating the results of the usability study.
+
+\begin{enumerate}[noitemsep]
+
+  \item Making the form for general survey data more clear by changing defaults
+    and hints.
+
+  \item Enhancing usage efficiency in the dialog for person-related properties.
+
+  \item Allowing ``sit down \& place baggage'' in one step.
+
+  \item Making a shortcut for the ``leave'' action available (without extra
+    confirmation) to be consistent with other actions.
+
+  \item Implementing undo support for all actions to correct mistakes.
+
+  \item Adding black borders around seats.
+
+  \item Using icons for persons or baggage on seats, in addition to text
+    labels.
+
+  \item Shortening the app's title in the menu bar to make more place for menu
+    items.
+
+  \item Fixing severe bug on screen rotation (all inputs were lost).
+
+  \item Indicating the current train direction with an arrow icon.
+
+  \item Remembering the current state of the train and hiding ``door release''
+    or ``train starts'' actions, respectively.
+
+  \item Showing a hint when actions are pending, \eg when marking the
+    investigator or defining a group.
+
+  \item Highlighting the menu icon and title during a pending action, to signal
+    the user that the action is not yet finished.
+
+\end{enumerate}
+
+\label{app:usability-study}
+\includepdf[pages=-]{appendix/usability-study.pdf}
+%\input{appendix/usability-study.tex} % geht nicht, weil das ein eigenständiges LaTeX Dokument ist
+
+\chapter{Additional data analysis}
+
+<<seating-data-plot-chosen-seat-group-01vs23, echo=FALSE, out.width='70%', fig.align='center', fig.pos='H', fig.cap='People\'s preference for a seat group within a compartment: choosing one with 0 or 1 other persons or one with 2 or 3 other persons.'>>=
+@
+
+\diffStatSignificant{fig:seating-data-plot-chosen-seat-group-01vs23}{\Sexpr{binomTest(filteredData$seatGroup01vs23, '0_OR_1')}}
+
+<<seating-data-plot-chosen-seat-group-empty, echo=FALSE, out.width='70%', fig.align='center', fig.pos='H', fig.cap='People\'s preference for a seat group within a compartment: choosing an empty seat group or any other.'>>=
+@
+
+\diffStatSignificant{fig:seating-data-plot-chosen-seat-group-empty}{\Sexpr{binomTest(filteredData$seatGroupEmptyVsOther, 'EMPTY')}}
+
+<<seating-data-plot-gender, echo=FALSE, out.width='70%', fig.align='center', fig.pos='H', fig.cap='Number of passengers grouped by gender. This feature was not recorded in earlier surveys (\\code{NA} is \\acl{N/A}).'>>=
+@
+
+The difference between the counts of women and men in
+figure~\ref{fig:seating-data-plot-gender} are not statistically significant
+(\Sexpr{filteredData = subset(personData, !is.na(GENDER)); binomTest(filteredData$GENDER, 'MALE')}).
+
+<<seating-data-plot-age-groups, echo=FALSE, out.width='70%', fig.align='center', fig.pos='H', fig.cap='Number of passengers grouped by age group. This feature was not recorded in earlier surveys (\\code{NA} is \\acl{N/A}).'>>=
+@
+
+<<seating-data-plot-groups, echo=FALSE, out.width='70%', fig.align='center', fig.pos='H', fig.cap='Number of passengers traveling alone vs. traveling in groups.', fig.scap='Number of passengers traveling alone vs. traveling in groups.'>>=
+@
+
+\diffStatSignificant{fig:seating-data-plot-groups}%
+{\Sexpr{binomTest(personData$inGroup, FALSE)}}
+
+<<seating-data-plot-position-relative-window, echo=FALSE, fig.asp=0.5, fig.pos='H', fig.cap='People\'s preference for seat positions in a seat group with one other person when deciding for an aisle or window seat respectively.'>>=
+@
+
+<<seating-data-plot-position-relative-forward, echo=FALSE, fig.asp=0.5, fig.pos='H', fig.cap='People\'s preference for seat positions in a seat group with one other person when deciding for an forward or backward-facing seat respectively.'>>=
+@
+
+The previous plot show that people most often choose the seat diagonally across
+from another person.
+However, this preference seems to be less pronounced when they choose a window
+seat or a forward-facing seat (which are the most popular seat categories).
+Possible hypothesis are:
+
+\begin{itemize}[noitemsep]
+
+  \item If they decide for a window seat they accept a closer position to the
+    other passenger more often.
+    That is, they give up on distance in favor of a window seat.
+    See figure~\ref{fig:seating-data-plot-position-relative-window}.
+
+  \item If they decide for a forward-facing seat they accept a closer position
+    to the other passenger more often.
+    That is, they give up on distance in favor of a forward-facing seat.
+    See figure~\ref{fig:seating-data-plot-position-relative-forward}.
+
+\end{itemize}
+<<seating-data-plot-position-relative-4, echo=FALSE, fig.align='center', fig.pos='H', fig.cap='People\'s preference for seat positions in a seat group with one other person depending on the other person\'s seat position.'>>=
+@
+
+<<seating-data-plot-2other-side, echo=FALSE, out.width='70%', fig.align='center', fig.pos='H', fig.cap='People\'s preference for window vs. aisle seats in a seat group with two other persons. Only those decisions are considered where there was no choice between forward vs. backward-facing seats.', fig.scap='People\'s preference for window vs. aisle seats in a seat group with two other persons.'>>=
+@
+
+\diffNotSignificant{fig:seating-data-plot-2other-side}{\Sexpr{binomTest(filteredData$seatDirection, 'FORWARD')}}
+
+<<seating-data-plot-2other-direction, echo=FALSE, out.width='70%', fig.align='center', fig.pos='H', fig.cap='People\'s preference for forward vs. backward-facing seats in a seat group with two other persons. Only those decisions are considered where there was no choice between window vs. aisle seats.', fig.scap='People\'s preference for forward vs. backward-facing seats in a seat group with two other persons.'>>=
+@
+
+\diffNotSignificant{fig:seating-data-plot-2other-direction}{\Sexpr{binomTest(filteredData$seatDirection, 'FORWARD')}}
+
+\end{appendices}

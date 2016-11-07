@@ -1,0 +1,135 @@
+\chapter{Conclusions and outlook}
+
+% TODO
+% Michael: schon ganz ok. Versuch nochmal die Absätze klarer mit
+% Schlüsselwörtern (in summary, further work/studies could/should focus on, more
+% work has to be done on, this would be an interesting direction of future work,
+% more focus has to be based on this and that in future studies, etc.)
+% einzuleiten. "Discussion" sehe ich hier eigentlich jetzt nicht mehr so.
+% Vielleicht einfach "Conclusions and outlook"? Du musst wahrscheinlich nicht
+% mehr viel machen, nur noch einen letzten Absatz mit Impact und Potential und
+% die Absätze davor etwas besser kennzeichnen und/oder strukturieren.
+
+% summary
+
+In this work, I designed a study on passengers' seating behavior in trains and
+developed a mobile app to support the data collection.
+I conducted the data collection, and processed and analyzed the data with
+respect to the choice of seating.
+The data analysis yielded insights on where passengers prefer to sit down in a
+compartment and in a seat group. % kleins bisschen redundant
+%
+For example, within a compartment, passengers tend to choose the seat group
+with the smallest number of other passengers.
+Within a seat group, passengers prefer window seats and forward-facing seats.
+However, if there is another person, passengers tend to choose the seat
+diagonally across from that person.
+%
+Based on the results of the data analysis, I designed a model for seating
+behavior and implemented it in the crowd simulation software \vadere.
+Finally, I verified and validated the model by evaluating output data generated
+in a simulation run.
+
+% conclusion
+
+The seating model I developed has shown to be capable of choosing seats for
+simulated train passengers in a realistic way.
+It can be included in larger simulation systems for public transport.
+
+% outlook
+
+Especially relevant would be the combination with other simulation models for
+the train interior.
+These can be models
+
+\begin{itemize}[noitemsep,nolistsep]
+
+  \item for the inflow process, \ie the process when passengers enter the train and
+    possibly choose a standing position to wait.
+
+  \item for the act of leaving the train including queuing and waiting until the
+    doors open \citep{zoennchen-2013,koster-2015b,seitz-2016c}.
+
+  \item for organizing the passenger exchange process; for example passengers
+    first exit the train before new passengers enter.
+
+  \item for a specific stepping behavior in crowded trains, which has been
+    implemented in a recent study \citep{sivers-2015}.
+    % Dynamic Stride Length Adaptation According to Utility And Personal Space
+
+\end{itemize}
+
+The question how passengers choose a compartment remains open in this work.
+According to experts at the \acf{MVV}\citemvv, this depends on multiple factors,
+including the local circumstances at the passenger's start and destination
+station.
+Additional studies would be necessary to investigate these aspects.
+
+From the perspective of social psychology, there are interesting topics that
+could be further investigated.
+Some research ideas are described in the following list.
+The dataset collected in my work can constitute a basis for these.
+
+\begin{itemize}[noitemsep]
+
+  \item The collected data indicates that most passengers apparently try to
+    maximize the distance to other passengers when choosing a seat.
+    \citet{hall-1966} describes a related phenomena---known as personal space---in
+    his book.
+    A follow-up study could compare these aspects of seating behavior between
+    different cultures by conducting the same data collection in other countries.
+
+  \item Another question is how gender and age affect seating behavior.
+    For example, based on the dataset, it can be examined, whether women prefer
+    to sit with other women or passengers of a specific age group prefer to sit
+    with others of a similar age.
+
+  \item Passengers arriving in groups might show some specific behavior.
+    For groups, typical seating constellations could be investigated, \eg the
+    relative seating position of two friends.
+
+  \item Placing hand baggage on free seats is often seen as a way to protect
+    personal space \citep{rueger-2010,cis-2009,plank-2008}.
+    How effective this measure is and at which crowding level passengers freely
+    remove their hand baggage to make space for others could also be examined
+    using the data.
+
+  % passt eigentlich nicht hier unter "social psyochology"...
+  % \item Between the moment of getting up from a seat to get off the train and the
+  %   moment of door release, there is a certain time span.
+  %   Especially older persons might may need more time.
+  %   This can be interesting for public transport organizations to optimize
+  %   procedures or the train interior.
+
+\end{itemize}
+
+The results of this work can especially be interesting for public transport
+organizations when they plan passenger surveys.
+One of the goals of passenger surveys is to obtain statistics on the usage of
+different transportation modes.
+These statistics can be used for a fair division of revenues or costs in public
+transport systems operated by multiple companies, especially if they have a
+shared ticket system.
+If the surveys are conducted in form of interviews, the question arises, which
+passengers to select as interviewees.
+The group of interviewees should be representative for all passengers.
+However, this might not be easily achievable.
+For example, passengers working for some big company are overrepresented in
+certain parts of a train because they prefer compartments near the best exit of
+their destination train station.
+To prevent this issue, it could help to simulate passengers' distribution inside
+the train in advance, to decide for compartments or seat groups in which the
+interviews should be conducted.
+The seating model alone is not sufficient for such simulations because it is not
+concerned with choosing compartments for passengers.
+Therefore, the development of an additional model would be required.
+This model could incorporate the data on passenger counts described in
+section~\ref{sec:passenger-counts}.
+
+
+% Come together: Two studies concerning the impact of group relations on personal space
+% novelli-2010
+
+% Feedback von Michael:
+% Das Kapitel ist im Vergleich zur Arbeit (100 Seiten) recht kurz. Denk daran, dass der Schluss und die Bewertung deiner Arbeit für den Leser das wichtigste sein können. Du kannst da ruhig auch Vermutungen aufstellen oder Ideen bringen, wenn das alles als solches erkennbar ist.
+% Ich würde versuchen noch mehr Potential der Ergebnisse einzubauen. Wozu können deine Ergebnisse noch verwendet werden, welche Probleme könnte man damit lösen (Peak hour?), welche neuen Hypothesen könnte man ableiten (Menschen sind egoistisch), wenn könnte das noch interessieren (Biologen, Architekten, Ingenieure, Polizei, Feuerwehr) und warum? Kann man damit Kosten verringern, Sicherheit erhöhen, die Fahrt angenehmer gestalten, etwas über Züge und Reiseverhalten lernen? :D Such dir was aus.

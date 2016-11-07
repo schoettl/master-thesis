@@ -1,0 +1,105 @@
+\usepackage[ngerman,english]{babel}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{floatflt}
+\usepackage{tabularx}
+\usepackage{caption}
+
+% instead of the subfig package required by knitr:
+\usepackage{subcaption}
+\newcommand{\subfloat}[2][need a sub-caption]{\subcaptionbox{#1}{#2}}
+% subfig and subfigure are deprecated
+
+%\usepackage[numbers,sort,comma,square]{natbib} % for paper-like citations
+\usepackage[round]{natbib}
+% remove the numbers option to enable full name citing (and then cite with \citep)
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{lmodern}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{pspicture}
+\usepackage{pdfpages}
+
+% for \FloatBarrier
+\usepackage{placeins}
+
+% save and (re-)use footmarks
+\usepackage{savefnmark}
+
+% useful for compact lists: \begin{itemize}[noitemsep,nolistsep]
+\usepackage{enumitem}
+
+\usepackage[
+    bookmarks,
+    bookmarksopen=true,
+    % colorlinks=true, % set in thesis.Rtex, depending on the environment variable BOOK_PRINT
+    linkcolor=blue,
+    anchorcolor=black,
+    citecolor=blue,
+    filecolor=magenta,
+    menucolor=red,
+    urlcolor=cyan,
+    backref,
+    plainpages=false,
+    pdfpagelabels,
+    hypertexnames=false
+    %linktocpage
+]{hyperref}
+
+\hypersetup{
+  pdftitle={\mytitle},%
+  pdfauthor={\myauthor},%
+  %pdfcreator={\autor},%
+  %pdfsubject={\titel},%
+  %pdfkeywords={\titel},%
+}
+
+\usepackage[printonlyused]{acronym}
+
+
+\usepackage{amsmath}
+\usepackage{unicode-math}
+%\setmathfont{Asana-Math.otf}
+\setmathfont{latinmodern-math.otf}
+%\setmathfont{xits-math.otf}
+
+\usepackage{MnSymbol}
+
+%\usepackage{he-she} % [they] option switches to they, but then there are wrong "s" when they goes.
+
+\usepackage{siunitx}
+
+\usepackage{breakurl}
+\usepackage{listings}
+\lstset{%
+language=,%
+frame=single,%
+captionpos=b,%
+tabsize=4,%
+basicstyle=\footnotesize,%
+showspaces=false,%
+showstringspaces=false,%
+aboveskip=6mm,%\parskip,% medium skip amount \medskipamount is NOTHING!?
+belowskip=4mm,%\parskip,% medium skip amount \medskipamount is NOTHING!?
+breaklines=true,%
+breakatwhitespace=false,% true -> only break at whitespace
+%prebreak={\mbox{\quad$\rhookswarrow$}}% waste of space
+}
+\lstloadlanguages{Java,bash,R}
+
+\usepackage{fancyvrb}
+
+%\usepackage{ifthen}
+%\usepackage{xifthen}
+
+% cannot be used with subcaption :(
+% svg.sty must be modified to not require subfig
+\usepackage{svg}
+
+\graphicspath{{figures/}}
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}% gif is not supported
+
+\usepackage[toc,page]{appendix}

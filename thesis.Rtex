@@ -1,0 +1,338 @@
+\documentclass[
+a4paper,
+12pt,
+openany,
+bibtotoc,
+headings=normal,
+bibliography=totoc,
+abstract=on
+]{scrreprt}
+
+<<include=FALSE>>=
+source('helpers.R')
+@
+
+\input{meta}
+
+% all needed packages
+\input{packages}
+
+<<echo=FALSE, results='asis'>>=
+if (ifdef('BOOK_PRINT')) {
+    cat('\\hypersetup{colorlinks=false}')
+} else {
+    cat('\\hypersetup{colorlinks=true}')
+}
+@
+
+% even when set to 0, error messages will contain the two most important pieces
+% of information; default errorcontextlines is 5
+%\errorcontextlines 10000
+
+\input{macros}
+
+
+\begin{document}
+
+\parskip 0em
+\parindent 0.8em
+\frenchspacing
+
+\VerbatimFootnotes
+
+% headline and footline
+\input{headfoot}
+
+\input{titlepage}
+
+<<echo=FALSE, results='asis'>>=
+if (ifdef('BOOK_PRINT')) {
+    cat('\\pagenumbering{roman}')
+}
+@
+
+\begin{abstract}
+
+  %% basic intro
+  In the field of pedestrian dynamics, microscopic models are used to simulate
+  the behavior of crowds.
+  These simulations can be used to estimate evacuation times and
+  crowd densities, but also to optimize efficiency in public transport.
+  When simulating public transport systems, it is necessary to simulate
+  passengers' behavior inside a train.
+  %% more detailed background
+  Modeling the situation inside a train can be divided into subproblems, \eg the
+  inflow process, waiting and seating behavior, leaving, and strategies to cope
+  with congestions at the doors.
+  Many of these subproblems have already been investigated and modeled.
+  % Feedback von Michael: vllt aus vorherigen 2 sätzen einen machen
+  %Many aspects of these systems have already been investigated/modeled.
+  % Aber dann fehlt der Bezug zum "inside a train"
+  %% general problem
+  However, there is little research on how passengers choose their seats inside
+  trains.
+  %% "here we show"
+  Here I present a model to simulate seating behavior in trains with open
+  compartments, each having four seat groups and each seat group having four
+  seats.
+  %% main results
+  The model is based on results from a data collection that I conducted in
+  Munich's suburban trains.
+  The collected data consists of logged events, \eg when a passenger sits down
+  or leaves, or when the train starts and stops.
+  The dataset also includes metadata on baggage, passengers, and groups.
+  The analysis of the dataset yields insights on where passengers prefer to sit
+  down in a compartment and in a seat group.
+  For example, within a compartment, passengers tend to choose the seat group
+  with the smallest number of other passengers.
+  Within a seat group, passengers prefer window seats and forward-facing seats.
+  However, if there is another person, passengers tend to choose the seat
+  diagonally across from that person.
+  These and other aspects are incorporated in a model of passengers' seating
+  behavior.
+  %% general context
+  I implemented the simulation model in \vadere, a framework for crowd
+  simulation developed at the \acl{MUAS}.
+  %% broader perspective
+  The seating model can be used as one component in larger systems for the
+  simulation of public transport.
+  As such, it helps to distribute simulated passengers throughout the train by
+  assigning them realistic seat positions. % TODO immer noch nicht sexy?
+  The results of this work can help to conduct studies on safety or efficiency
+  in public transportation systems.
+  %, especially with respect to group behavior. (aber nicht so relevant)
+
+\end{abstract}
+
+\selectlanguage{ngerman}
+\begin{abstract}
+
+  %% basic intro
+  % In the field of pedestrian dynamics, microscopic models are used to simulate
+  % the behavior of crowds.
+  Im Forschungsgebiet Fußgängerdynamik werden mikroskopische Modelle eingesetzt,
+  um das Verhalten von Menschenmengen zu simulieren.
+  % These simulations can be used to estimate evacuation times and
+  % crowd densities, but also to optimize efficiency in public transport.
+  Diese Simulationen können verwendet werden um Evakuierungszeiten und
+  Menschendichten abzuschätzen, aber auch, um Effizienz im öffentlichen
+  Personenverkehr zu optimieren.
+  % When simulating public transport systems, it is necessary to simulate
+  % passengers' behavior inside a train.
+  Bei der Simulation öffentlicher Verkehrssysteme ist es notwendig, das
+  Verhalten von Fahrgästen im Zug zu simulieren.
+  %% more detailed background
+  % Modeling the situation inside a train can be divided into subproblems, \eg the
+  % inflow process, waiting and seating behavior, leaving, and strategies to cope
+  % with congestions at the doors.
+  Die Modellierung der Situation in einem Zug kann in Teilprobleme aufgeteilt
+  werden, \zb die Abläufe im Eingangsbereich und das Warte- und Sitzverhalten.
+  % Many of these subproblems have already been investigated and modeled.
+  Viele dieser Teilprobleme wurden bereits untersucht und modelliert.
+  % Feedback von Michael: vllt aus vorherigen 2 sätzen einen machen
+  %Many aspects of these systems have already been investigated/modeled.
+  % Aber dann fehlt der Bezug zum "inside a train"
+  %% general problem
+  % However, there is little research on how passengers choose their seats inside
+  % trains.
+  Allerdings ist wenig darüber bekannt, wie Fahrgäste in Zügen ihren Sitzplatz wählen.
+  %% "here we show"
+  % Here I present a model to simulate seating behavior in trains with open
+  % compartments, each having four seat groups and each seat group having four
+  % seats.
+  In meiner Arbeit stelle ich ein Modell vor, mit dem die Sitzplatzwahl in Zügen
+  simuliert werden kann.
+  Es gilt für Züge mit offenen Abteilen und mit je vier Sitzgruppen pro Abteil à
+  vier Sitzplätzen.
+  %% main results
+  % The model is based on results from a data collection that I conducted in
+  % Munich's suburban trains.
+  Das Modell basiert auf den Ergebnissen einer Datenerhebung, die ich in
+  Münchens S-Bahnen durchgeführt habe.
+  % The collected data consists of logged events, \eg when a passenger sits down
+  % or leaves, or when the train starts and stops.
+  Die gesammelten Daten bestehen aus protokollierten Ereignissen, \zb wenn sich
+  Fahrgäste setzen oder aufstehen oder wenn der Zug anfährt oder hält.
+  % The analysis of the dataset yields insights on where passengers prefer to sit
+  % down in a compartment and in a seat group.
+  Die Analyse des Datensatzes bringt Erkenntnisse darüber, wohin sich Fahrgäste
+  im Abteil und in der Sitzgruppe bevorzugt setzen.
+  % For example, within a compartment, passengers tend to choose the seat group
+  % with the smallest number of other passengers.
+  Beispielsweise setzen sich Fahrgäste in einem Abteil meistens in die Sitzgruppe, in
+  der am wenigsten andere Personen sitzen.
+  % Within a seat group, passengers prefer window seats and forward-facing seats.
+  % However, if there is another person, passengers tend to choose the seat
+  % diagonally across from that person.
+  Innerhalb einer Sitzgruppe bevorzugen Fahrgäste Fensterplätze und Plätze in
+  Fahrtrichtung.
+  Wenn bereits eine andere Person in der Sitzgruppe sitzt, wählen Fahrgäste
+  meist den diagonal gegenüberliegenden Platz.
+  % These and other aspects are incorporated in a model of passengers' seating
+  % behavior.
+  Diese und weitere Aspekte sind in einem Modell für die Sitzplatzwahl
+  einbezogen.
+  %% general context
+  % I implemented the simulation model in \vadere, a framework for crowd
+  % simulation developed at the \acl{MUAS}.
+  Ich habe das Modell in \vadere\ implementiert, einem Framework zur
+  Simulation von Fußgängerdynamik, das an der Hochschule München entwickelt wurde.
+  %% broader perspective
+  % The seating model can be used as one component in larger systems for the
+  % simulation of public transport.
+  Das Modell kann als eine Komponente in einem größeren System zur Simulation
+  von öffentlichen Verkehrssystemen verwendet werden.
+  % As such, it helps to distribute simulated passengers throughout the train in a
+  % natural way. % TODO umformulieren?
+  Dabei hilft es, simulierte Personen im Zug zu verteilen, indem es ihnen
+  realistische Sitzpositionen zugeweist.
+  % TODO Dabei hilft das Modell (es), ...
+  % The results of this work can help to conduct studies on safety or efficiency
+  % in public transportation systems.
+  Die Ergebnisse dieser Arbeit können dabei helfen, weitere Studien über
+  Sicherheit oder Effizienz im öffentlichen Personenverkehr durchzuführen.
+  %, especially with respect to group behavior. (aber nicht so relevant)
+
+\end{abstract}
+\selectlanguage{english}
+\frenchspacing
+
+%\centerline{\bfseries\Large Acknowledgments}
+{\centering\bfseries\Large
+Acknowledgments
+
+}
+\vspace{2em}
+\thispagestyle{empty}
+
+First, I would like to thank Prof.\,Dr. Gerta Köster's research group at the
+\acl{MUAS} for discussions and feedback, and for a great atmosphere and the fun
+collaboration.
+I would especially like to thank Michael Seitz for all the time he invested in
+meetings, discussions, and proof-reading, which were all of invaluable help.
+Then, I would like to thank my adviser, Gerta Köster, for frequent and valuable
+feedback and for always fast and helpful email responses.
+I also like to thank my friends from Munich, Vienna (Austria), and San Luis
+Obispo (CA, USA) for the inspiring discussions and for proof-reading.
+% Markus, Tobias, Korbi, Niklas, Rolf
+Finally, I would like to thank my family for the mental support, coffee breaks, and
+discussions during the time of writing my thesis.
+% Mario, for the explanation of the binomial coefficient. :)
+% What about Prof.Dr. Kurfess?
+
+\clearpage
+
+\input{statement}
+
+% Doc on Rtex/knitr:
+% http://yihui.name/knitr/demo/minimal/
+% https://www.sharelatex.com/learn/Knitr
+
+<<include=FALSE>>=
+if (ifdef('USE_TIKZ')) {
+    # tikz takes a very long time!
+    # Use it for the final version:
+    library(tikzDevice)
+    opts_chunk$set(dev = 'tikz')
+}
+
+opts_chunk$set(
+    fig.path = 'figures/knitr/',
+    size = 'small')
+
+# set ggplot2 theme globally
+library(ggplot2)
+theme_set(theme_light(base_size = 22))
+#theme_set(theme_bw())
+@
+
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\lstlistoflistings
+
+\clearpage
+
+<<echo=FALSE, results='asis'>>=
+if (ifdef('BOOK_PRINT')) {
+    cat('\\pagenumbering{arabic}')
+}
+@
+
+\input{chapters/intro}
+
+%\input{chapters/data}
+<<child='chapters/data.Rtex'>>=
+@
+
+\input{chapters/software}
+
+%\input{chapters/model}
+<<child='chapters/model.Rtex'>>=
+@
+
+%\input{chapters/evaluation}
+<<child='chapters/evaluation.Rtex'>>=
+@
+
+\input{chapters/end}
+
+
+% Nomenclature
+
+% Multiple unit or railcar = Triebzug/Triebwagen
+% Train = Zug = a series of vehicles on a rail track.
+% Wagon = railroad car (US), railway wagon (UK), railway carriage (IUR) = simple wagons, usually not self-propelled.
+% Compartment plan = seat numbering scheme of a compartment
+% Inter-city train = Fernreisezug (hat mir Tobias geschrieben)
+% See also "terms & definitions in intro.tex for more!
+
+\chapter*{Acronyms}
+% Use package nomenclature or glossaries next time?
+% \ac, \acs, \acl, \acf (short, long, full; append p for plural)
+\begin{acronym}
+  \acro{API}{Application programming interface}
+  \acro{BHM}{Behavior Heuristic Model}
+  \acro{CLI}{Command line interface}
+  \acro{CPU}{Central Processing Unit}
+  \acro{CSV}{Comma-separated values}
+  \acro{ER}{Entity---relationship}
+  \acro{GUI}{Graphical user interface}
+  \acro{I/O}{Input/Output}
+  \acro{ICE}{Intercity Express}
+  \acro{IDE}{Integrated Development Environment}
+  \acro{ID}{Identifier}
+  \acro{ISO}{International Organization for Standardization}
+  \acro{JAR}{Java Archive}
+  \acro{JDK}{Java Development Kit}
+  \acro{JRE}{Java Runtime Environment}
+  \acro{JSON}{JavaScript Object Notation}
+  \acro{MTP}{Media Transfer Protocol}
+  \acro{MUAS}{Munich University of Applied Sciences}
+  \acro{MVC}{Model View Controller}
+  \acro{MVV}{Münchner Verkehrs- und Tarifverbund}
+  \acro{N/A}{``not available''}
+  \acro{OOP}{Object-orientated programming}
+  \acro{ORM}{Object-relational mapping}
+  \acro{OSM}{Optimal Steps Model}
+  \acro{PDDL}{Public Domain Dedication and License}
+  \acro{SDK}{Software Development Kit}
+  \acro{SQL}{Structured Query Language}
+  \acro{UI}{User interface}
+  \acro{UML}{Unified Modeling Language}
+  \acro{XML}{Extensible Markup Language}
+\end{acronym}
+
+% Bibliography
+\bibliographystyle{plainnat}
+\bibliography{../Literatur/Literature,../../Literatur/Literature}
+
+%\input{appendix}
+<<child='appendix.Rtex'>>=
+@
+
+\end{document}
