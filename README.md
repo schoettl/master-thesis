@@ -1,10 +1,11 @@
 Master thesis
 =============
 
+My master thesis, written in LaTeX using LuaTeX, knitr, BibTeX, make, and more.
 I guess this work is technically inspired by the book The Pragmatic Programmer.
 Maybe it will help someone in the process of automating the compilation of
 their thesis.
-More details are at [my blog](http://jakob.keramik-schoettl.de/blog/).
+More details can be found at [my blog](http://jakob.keramik-schoettl.de/blog/).
 
 Compile
 -------
